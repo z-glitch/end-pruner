@@ -16,7 +16,7 @@ Inspired by the useful tutorial created by Xisuma (and available at
 https://xisumavoid.com/pruneendchunks/ ), this script will preserve the region
 files containing the central ~3000x3000 blocks of the End and delete everything
 else.  You can also, if desired, specify other block ranges to preserve via
-command line options.
+command line options or a config file.
 
 # Requirements
 * Python3
