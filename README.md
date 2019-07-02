@@ -27,10 +27,11 @@ with care, but mistakes do happen, and a backup is cheap insurance.  The End fil
 can be found in the `DIM1` directory (not to be confused with `DIM-1`, which contains
 the Nether).
 ```
-usage: end-pruner.py [-h] [--keep-range x1,z1,x2,z2] [-y] [-q] [--dry-run]
+usage: end-pruner.py [-h] [--keep-range x1,z1,x2,z2]
+                     [--config-file CONFIG_FILE] [-y] [-q] [--dry-run]
                      server_dir
 
-end-pruner v0.3: A tool to prune the end dimension in Minecraft
+end-pruner v0.4: A tool to prune the end dimension in Minecraft
 
 positional arguments:
   server_dir            Minecraft server directory
@@ -47,6 +48,11 @@ optional arguments:
                         times to keep several areas, and it's okay if those
                         areas overlap. The default range of
                         -1536,-1536,1535,1535 is always preserved.
+  --config-file CONFIG_FILE
+                        Load additional config from FILE. This file should
+                        contain a list of block ranges to keep (in x1,z1,x2,z2
+                        format), one per line. You may add comments if you
+                        prefix them with the '#' character.
   -y                    Skip delete confirmation
   -q                    Quiet mode
   --dry-run             Show files to be deleted, but do not actually delete
