@@ -16,22 +16,32 @@ Inspired by the useful tutorial created by Xisuma (and available at
 https://xisumavoid.com/pruneendchunks/ ), this script will preserve the region
 files containing the central ~3000x3000 blocks of the End and delete everything
 else.  You can also, if desired, specify other block ranges to preserve via
-command line options or a config file.
+command line options or a config file.  As a courtesy, any players who logged
+out while in the End will be relocated to their respective spawn points.
 
 # Requirements
 * Python3
+* (The NBT Python library)[https://pypi.org/project/NBT/] (Available via `pip3 install nbt`)
+
+# Compatibility
+* Known to work with Paper MC 1.14.3.
 
 # Usage
-Before using, **BACK UP YOUR END DIMENSION DATA FILES!**  This script was written
-with care, but mistakes do happen, and a backup is cheap insurance.  The End files
-can be found in the `DIM1` directory (not to be confused with `DIM-1`, which contains
-the Nether).
+Before using, **SHUT DOWN YOUR SERVER AND BACK UP YOUR FILES!**
+This script deletes or modifies files in the following directories:
+* `DIM1`, or `world_the_end/DIM1` for Bukkit servers.  (Not to be confused with
+`DIM-1`, which contains the Nether.)
+* `world/playerdata`
+
+This script was written with care, but mistakes do happen, and a backup is
+cheap insurance.
 ```
 usage: end-pruner.py [-h] [--keep-range x1,z1,x2,z2]
-                     [--config-file CONFIG_FILE] [-y] [-q] [--dry-run]
+                     [--config-file CONFIG_FILE] [--dont-move-players] [-y]
+                     [-q] [--dry-run]
                      server_dir
 
-end-pruner v0.4: A tool to prune the end dimension in Minecraft
+end-pruner v0.5: A tool to prune the End dimension in Minecraft
 
 positional arguments:
   server_dir            Minecraft server directory
@@ -53,63 +63,26 @@ optional arguments:
                         contain a list of block ranges to keep (in x1,z1,x2,z2
                         format), one per line. You may add comments if you
                         prefix them with the '#' character.
+  --dont-move-players   Don't move players out of the End. (By default, any
+                        players still in the End are sent back to their spawn
+                        points.)
   -y                    Skip delete confirmation
   -q                    Quiet mode
   --dry-run             Show files to be deleted, but do not actually delete
                         them
 ```
 
-# Example
+# Examples
 ```
-$ ./end-pruner.py ~minecraft/minecraft/servers/private.test/
-[ ] Found region directory at /home/minecraft/minecraft/servers/private.test/world_the_end/DIM1/region
-[D] r.19.0.mca
-[D] r.15.0.mca
-[D] r.11.0.mca
-[D] r.7.0.mca
-[D] r.12.0.mca
-[ ] r.-1.0.mca
-[ ] r.0.0.mca
-[D] r.18.0.mca
-[ ] r.0.-1.mca
-[D] r.8.0.mca
-[ ] r.2.0.mca
-[D] r.17.0.mca
-[D] r.5.0.mca
-[D] r.13.0.mca
-[D] r.3.0.mca
-[D] r.14.0.mca
-[D] r.9.0.mca
-[D] r.20.0.mca
-[D] r.-20.0.mca
-[D] r.16.0.mca
-[D] r.10.0.mca
-[D] r.6.0.mca
-[ ] r.1.0.mca
-[ ] r.-1.-1.mca
-[D] r.4.0.mca
-[ ] Keeping 6 files
-[ ] Need to delete 19 files
-[!] ARE YOU SURE YOU WANT TO DELETE THESE FILES?  (NO WAY TO UNDELETE) [y/N] y
-[D] Deleting /home/minecraft/minecraft/servers/private.test/world_the_end/DIM1/region/r.19.0.mca
-[D] Deleting /home/minecraft/minecraft/servers/private.test/world_the_end/DIM1/region/r.15.0.mca
-[D] Deleting /home/minecraft/minecraft/servers/private.test/world_the_end/DIM1/region/r.11.0.mca
-[D] Deleting /home/minecraft/minecraft/servers/private.test/world_the_end/DIM1/region/r.7.0.mca
-[D] Deleting /home/minecraft/minecraft/servers/private.test/world_the_end/DIM1/region/r.12.0.mca
-[D] Deleting /home/minecraft/minecraft/servers/private.test/world_the_end/DIM1/region/r.18.0.mca
-[D] Deleting /home/minecraft/minecraft/servers/private.test/world_the_end/DIM1/region/r.8.0.mca
-[D] Deleting /home/minecraft/minecraft/servers/private.test/world_the_end/DIM1/region/r.17.0.mca
-[D] Deleting /home/minecraft/minecraft/servers/private.test/world_the_end/DIM1/region/r.5.0.mca
-[D] Deleting /home/minecraft/minecraft/servers/private.test/world_the_end/DIM1/region/r.13.0.mca
-[D] Deleting /home/minecraft/minecraft/servers/private.test/world_the_end/DIM1/region/r.3.0.mca
-[D] Deleting /home/minecraft/minecraft/servers/private.test/world_the_end/DIM1/region/r.14.0.mca
-[D] Deleting /home/minecraft/minecraft/servers/private.test/world_the_end/DIM1/region/r.9.0.mca
-[D] Deleting /home/minecraft/minecraft/servers/private.test/world_the_end/DIM1/region/r.20.0.mca
-[D] Deleting /home/minecraft/minecraft/servers/private.test/world_the_end/DIM1/region/r.-20.0.mca
-[D] Deleting /home/minecraft/minecraft/servers/private.test/world_the_end/DIM1/region/r.16.0.mca
-[D] Deleting /home/minecraft/minecraft/servers/private.test/world_the_end/DIM1/region/r.10.0.mca
-[D] Deleting /home/minecraft/minecraft/servers/private.test/world_the_end/DIM1/region/r.6.0.mca
-[D] Deleting /home/minecraft/minecraft/servers/private.test/world_the_end/DIM1/region/r.4.0.mca
-[ ] Done.
-$
+# Just testing -- no files modified.
+$ ./end-pruner.py --dry-run YourServerDirectory
+
+# Interactive use:
+$ ./end-pruner.py YourServerDirectory
+
+# Non-interactive use:
+$ ./end-pruner.py -y YourServerDirectory
+
+# Non-interactive use, with less output:
+$ ./end-pruner.py -y -q YourServerDirectory
 ```
