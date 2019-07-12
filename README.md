@@ -21,12 +21,14 @@ out while in the End will be relocated to their respective spawn points.
 
 # Requirements
 * Python3
-* (The NBT Python library)[https://pypi.org/project/NBT/] (Available via `pip3 install nbt`)
+* [The NBT Python library](https://pypi.org/project/NBT/) -- which you can get
+by running `pip3 install nbt`
+
 
 # Compatibility
 * Known to work with Paper MC 1.14.3.
 
-# Usage
+# Warning
 Before using, **SHUT DOWN YOUR SERVER AND BACK UP YOUR FILES!**
 This script deletes or modifies files in the following directories:
 * `DIM1`, or `world_the_end/DIM1` for Bukkit servers.  (Not to be confused with
@@ -35,6 +37,8 @@ This script deletes or modifies files in the following directories:
 
 This script was written with care, but mistakes do happen, and a backup is
 cheap insurance.
+
+# Usage
 ```
 usage: end-pruner.py [-h] [--keep-range x1,z1,x2,z2]
                      [--config-file CONFIG_FILE] [--dont-move-players] [-y]
