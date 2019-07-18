@@ -240,7 +240,7 @@ class EndPruner:
             '(By default, any players still in the End are sent back to their spawn points.)')
         parser.add_argument('-y', action='store_true', help='Skip delete confirmation')
         parser.add_argument('-q', action='store_true', help='Quiet mode')
-        parser.add_argument('--dry-run', action='store_true', help='Show files to be deleted, but do not actually delete them')
+        parser.add_argument('--dry-run', action='store_true', help='Show files to be deleted/modified, but do not actually alter them')
         parser.add_argument('server_dir', help='Minecraft server directory')
         args = parser.parse_args()
 

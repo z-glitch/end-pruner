@@ -16,13 +16,14 @@ Inspired by the useful tutorial created by Xisuma (and available at
 https://xisumavoid.com/pruneendchunks/ ), this script will preserve the region
 files containing the central ~3000x3000 blocks of the End and delete everything
 else.  You can also, if desired, specify other block ranges to preserve via
-command line options or a config file.  As a courtesy, any players who logged
-out while in the End will be relocated to their respective spawn points.
+command line options or a config file.  To protect them from falling into the void,
+any players who logged out while in the End will be relocated to their respective
+spawn points.
 
 # Requirements
 * Python3
 * [The NBT Python library](https://pypi.org/project/NBT/) -- which you can get
-by running `pip3 install nbt`
+by running `sudo pip3 install nbt`
 
 
 # Compatibility
@@ -72,8 +73,8 @@ optional arguments:
                         points.)
   -y                    Skip delete confirmation
   -q                    Quiet mode
-  --dry-run             Show files to be deleted, but do not actually delete
-                        them
+  --dry-run             Show files to be deleted/modified, but do not actually
+                        alter them
 ```
 
 # Examples
